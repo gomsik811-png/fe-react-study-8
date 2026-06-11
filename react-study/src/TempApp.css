@@ -1,0 +1,29 @@
+
+/* css 코드 */
+
+/* TempApp.css */
+
+h2 {
+    color: red;
+}
+
+/* h1 {
+
+    font-size: 100px;
+    line-height: 1.2;
+    margin: 0;
+
+    background: linear-gradient(
+        to right,
+        red,
+        orange,
+        yellow,
+        green,
+        blue,
+        navy,
+        purple
+    );
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+} */
+
