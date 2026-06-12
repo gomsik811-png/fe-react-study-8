@@ -16,7 +16,6 @@ function State03 (){
     //{ {}, {}, {} }
 
     
-    }
 
     return(
         <div>
