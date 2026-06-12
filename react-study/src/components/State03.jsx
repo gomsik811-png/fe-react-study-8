@@ -15,7 +15,8 @@ function State03 (){
     // { key:value, key:value, key:[] }
     //{ {}, {}, {} }
 
-
+    
+    }
 
     return(
         <div>
@@ -29,7 +30,7 @@ function State03 (){
                 // arr.push(7);    //arr = [1,2,3,4,5,7]
                 // setArr(arr); //화면 재렌더링이 발생하지 않음
 
-                setArr( [1,2,3,4,5,7] );
+                //setArr( [1,2,3,4,5,7] );
 
                 //깊은복사 -> 새로운 주소에 데이터 생성...
                 //let temp = arr; //얕은복사
