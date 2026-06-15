@@ -33,8 +33,8 @@ function App() {
       // <Quiz02/>
       // <Props02/>
       // <Quiz03/>
-      // <NewsBlog/>
-      <Quiz04/>
+      <NewsBlog/>
+      // <Quiz04/>
 
   
   )

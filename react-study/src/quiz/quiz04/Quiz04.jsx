@@ -8,6 +8,8 @@ function Quiz04() {
     let detailArr = ['내용자리', '내용자리', '내용자리']
 
     let title = 'React Study';
+
+    
     return (
         <div>
             <div className='black-nav'>
