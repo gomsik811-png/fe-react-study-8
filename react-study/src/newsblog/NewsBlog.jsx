@@ -23,14 +23,13 @@ function NewsBlog() {
 
     let [modalFlag, setModalFlag] = useState(false);
 
-    //model 창에 전달한 선택한 뉴스 포스팅의 관련 정보
+
+    //Modal 창에 전달할 선택한 뉴스 포스팅의 관련 정보
     let [selectedTitle, setSelectedTitle] = useState('');
     let [selectedLikeCount, setSelectedLikeCount] = useState(0);
 
     //input 요소에서 입력된 값을 저장하는 용도
-    let [inputText , setInputText] = useState(' ');
-
-
+    let [inputText, setInputText] = useState('');
 
 
     return (
@@ -48,8 +47,9 @@ function NewsBlog() {
                     return (
                         <div className='post-list' key={index}>
                             <h4 onClick={() => {
-                                setModalFlag(!modalFlag);
-
+                                
+                                setModalFlag(!modalFlag); //모달창 표시 여부 On/Off   true/false 
+                                //어떤 뉴스를 눌렀는지 정보 -> state 저장 -> Modal props 전달
                                 setSelectedTitle(item);
                                 setSelectedLikeCount(likeCountArr[index]);
 
@@ -63,6 +63,36 @@ function NewsBlog() {
 
                             }}>❤</span> {likeCountArr[index]}  </h4>
                             <p>내용자리</p>
+                            <button onClick={()=>{
+                                //누른 대상을 삭제
+                                //배열안에 누른 대상의 index 위치에 있는 값 제거
+
+                                // index
+                                // arr.splice(index, 몇개지울, 추가할값)
+                                //              0,       1
+                                //              5,       0,     10
+                                //              3,       1,     3
+
+                                // //뉴스제목
+                                // let temp = [...news];
+                                // temp.splice(index, 1);  //삭제를 누른 index위치에 값 1개 삭제
+                                // setNews(temp);
+
+                                // //좋아요 갯수
+                                // likeCountArr.splice(index, 1);
+                                                    //2 index
+                                let temp = [...news];
+                                temp = temp.filter((value, idx)=>{
+                                    return idx != index;    // 0 !=2    1 !=2   2!= 2
+                                })
+                                console.log(temp);
+                                setNews(temp);
+
+                                setlikeCountArr(likeCountArr.filter(( _ , idx)=> idx != index))
+                                console.log(temp);
+                                setNews(temp);
+
+                            }}>삭제</button>
                         </div>
                     )
                 })
@@ -76,26 +106,36 @@ function NewsBlog() {
             }}>긴급제목변경</button>
 
             <div>
-                <input type='text' id="input_news_title" value={inputText} onChange={(event)=>{
+                <input type='text' id="input_news_title" value={inputText}  onChange={(event)=>{
 
-                    //input 창에서 입력이 발생 -> onChange 변경된 함수 -> value 값 -> state 변수에 저장
+                    //input 창에서 입력이 발생 -> onChange 변경된 함수 -> value 값 -> state변수에 저장
 
                     //console.log(event);
-                    //event.target.value
                     console.log(event.target.value);
                     setInputText(event.target.value);
-                    
 
                     /*
                     let input_title = document.getElementById('input_news_title');
-                    let title = input_title.ariaValueMax;
+                    let title = input_title.value;
 
                     배열...push(title);
-                    input_title.vlaue='';
+                    input_title.value = '';
                     */
-                }} />
+                }}/>
                 <button onClick={()=>{
-                    //발행 버튼 클릭 -> input 입력한 값 state변수에 저장된값 ->배열에 등록/추가 처리
+                    // 발행 버튼 클릭 -> input 입력한 값 state변수에 저장된값 -> 배열에 등록/추가 처리
+
+                    // inputText -> 등록하려는 값
+
+                    inputText = inputText.trim(); //앞뒤공백제거
+                    //setInputText(inputText.trim())
+
+                    //추가하려는 값이 비어있으면? 진행X
+                    if(inputText == ''){
+                        alert('값을 입력해주세요');
+                        setInputText('');  //입력칸 초기화
+                        return;
+                    }
 
                     let temp = [...news];
                     temp.push(inputText);
@@ -103,16 +143,21 @@ function NewsBlog() {
 
                     setInputText(''); //입력된 값 제거
 
+                    //좋아요 갯수 처리 추가
+                    let temp2 = [ ...likeCountArr, 0];
+                    setLikeCountArr(temp2);
+                    //likeCountArr.push(0); //배열 뒤에 0 값 추가
 
                 }}>발행</button>
             </div>
+
 
             {
                 /* modalFlag == true ?  <Modal/> : nul */
             }
 
             {
-                modalFlag && <Modal  title={selectedTitle} likeCount={selectedLikeCount}
+                modalFlag && <Modal title={selectedTitle} likeCount={selectedLikeCount} 
                                 news={news} setNews={setNews} bgColor={'lightblue'} />
             }
 
