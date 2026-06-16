@@ -27,6 +27,9 @@ function NewsBlog() {
     let [selectedTitle, setSelectedTitle] = useState('');
     let [selectedLikeCount, setSelectedLikeCount] = useState(0);
 
+    //input 요소에서 입력된 값을 저장하는 용도
+    let [inputText , setInputText] = useState(' ');
+
 
 
 
@@ -71,6 +74,38 @@ function NewsBlog() {
                 temp[0] = 'Today 긴급 속보';
                 setNews(temp);
             }}>긴급제목변경</button>
+
+            <div>
+                <input type='text' id="input_news_title" value={inputText} onChange={(event)=>{
+
+                    //input 창에서 입력이 발생 -> onChange 변경된 함수 -> value 값 -> state 변수에 저장
+
+                    //console.log(event);
+                    //event.target.value
+                    console.log(event.target.value);
+                    setInputText(event.target.value);
+                    
+
+                    /*
+                    let input_title = document.getElementById('input_news_title');
+                    let title = input_title.ariaValueMax;
+
+                    배열...push(title);
+                    input_title.vlaue='';
+                    */
+                }} />
+                <button onClick={()=>{
+                    //발행 버튼 클릭 -> input 입력한 값 state변수에 저장된값 ->배열에 등록/추가 처리
+
+                    let temp = [...news];
+                    temp.push(inputText);
+                    setNews(temp);
+
+                    setInputText(''); //입력된 값 제거
+
+
+                }}>발행</button>
+            </div>
 
             {
                 /* modalFlag == true ?  <Modal/> : nul */
