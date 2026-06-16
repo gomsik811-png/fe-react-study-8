@@ -15,6 +15,7 @@ import Props02 from './components/Props02'
 import Quiz03 from './quiz/quiz03/Quiz03'
 import NewsBlog from './newsblog/NewsBlog'
 import Quiz04 from './quiz/quiz04/Quiz04'
+import Quiz05 from './quiz/quiz05/quiz05'
 
 
 
@@ -33,8 +34,9 @@ function App() {
       // <Quiz02/>
       // <Props02/>
       // <Quiz03/>
-      <NewsBlog/>
+      // <NewsBlog/>
       // <Quiz04/>
+      <Quiz05/>
 
   
   )
