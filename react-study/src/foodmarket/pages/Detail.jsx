@@ -37,9 +37,9 @@ function Detail( {foods} ){
             <div>
                 <h1>없어 그거</h1>
                 <h2>있는거 검색해</h2>
-                <button variant="info" onClick={()=>{
+                <Button variant="info" onClick={()=>{
                     navigate("/");
-                }}>홈으로 돌아가기</button>
+                }}>홈으로 돌아가기</Button>
             </div>
         )
     }
