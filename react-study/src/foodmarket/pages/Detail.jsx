@@ -1,5 +1,6 @@
 import { Container, Row, Col, Button } from "react-bootstrap";
 import { useParams,useNavigate } from "react-router";
+import { useState, useEffect } from "react";
 
 function Detail( {foods} ){
     //Detail 페이지에서 보여줄 상품정보
@@ -8,6 +9,57 @@ function Detail( {foods} ){
     // /detail/fd000    /detail/fd001
 
     // :id 위치에 넘어온 값이 무엇이냐? ---> foods 데이터 id 가 동일한 상품 찾기
+
+
+    //--------------------------------------
+
+
+    /*
+        useEffect(실행함수, 의존성배열)
+        useEffect(실행함수, [])
+        useEffect(실행함수)
+
+        useEffect(실행함수{
+            return()=>{clean up function}
+        }, 의존성배열)
+
+    */
+
+    let [orderCount, setOderCount] = useState(0);
+    let [test, setTest] = useState(0);
+
+    useEffect(()=>{
+        console.log('useEffect 함수 실행 (의존성 배열 없음)')
+    })  //의존성배열X -> 로딩될때마다 매번 실행
+
+    useEffect(()=>{
+        console.log('useEffect 함수 실행 [] 빈배열 의존')
+    }, [])// 빈배열 -> 생성/로딩시 1회 실행
+
+    useEffect(()=>{
+        console.log('useEffect 함수 실행 [orderCount] 의존성 배열')
+        console.log('useEffect[orderCOunt] : ' + orderCount)
+    }, [orderCount])// 의존성 배열에 존재하느 값 -> 참고
+
+    useEffect(()=>{
+        console.log('useEffect 함수 실행 [test] 의존성 배열')
+    }, [test])// 의존성 배열에 존재하느 값 -> 참고
+
+    useEffect(()=>{
+    console.log('useEffect 함수 실행 [test,orderCount] 의존성 배열')
+    }, [test,orderCount])// 의존성 배열에 존재하느 값 -> 참고
+
+
+
+
+
+
+
+    //-----------------------------------------
+
+
+
+
 
     //경로에 있는 값을 읽어오기
     let { id } = useParams();
@@ -58,9 +110,12 @@ function Detail( {foods} ){
                     <p>{food.price}</p>
 
                     <p>
-                        <Button variant="dard">-</Button>
-                        <span> 0 </span>
-                        <Button variant="dard">+</Button>
+                        <Button variant="dard" onClick={()=>{setOderCount(orderCount-1)}}>-</Button>
+                        <span> {orderCount} </span>
+                        <Button variant="dard" onClick={()=>{
+                            setOderCount(orderCount+1)
+                            console.log('onClick() : ' + orderCount);
+                            }}>+</Button>
                     </p>
 
                         <Button variant="primary">주문하기</Button>
