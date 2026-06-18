@@ -134,15 +134,108 @@ function Detail({ foods }) {
                 }}>홈으로 돌아가기</Button>
             </div>
         )
-        
+
     }
     let gogiWanja;
 
-        if (food.stockCount == 0) {
-            gogiWanja = <Button variant="danger" disabled="true">품절</Button>
+    if (food.stockCount == 0) {
+        gogiWanja = <Button variant="danger" disabled="true">품절</Button>
+    } else {
+        gogiWanja = <Button variant="primary">주문하기</Button>
+    };
+
+    //---------------------------------------------
+
+    //스타일 적용
+
+    /*
+    조건에 따라서 스타일 적용
+    가격표시
+        1만원 이상 -> 빨간색
+        1만원 미만 -> 파란색
+
+
+        1) js 객체
+        <p>style={{colot: 'red', fontSize:'20px' } }</p>
+            // {color: 'red'}        {color: 'blue'}
+
+        <p style={priceTextStyle}>{food.price}</p>
+        <p style={{color: food.price >= 10000 ? 'red' : 'blue'}}>{food.price}</p>
+
+        2)
+        <p style={priceTextStyleFunc(food.price)}>{food.price}</p>
+
+        3) 
+        //클래스 이름 단일
+        <p className={ food.price >= 10000 ? 'price-red' : 'price-blue'}>{food.price}</p>
+        <p className={ 'text-strong ' + (food.price >= 10000 ? 'price-red' : 'price-blue') }>{food.price}</p>
+
+
+        // className=속성값 에 들어가는 변수 형태로도 활용
+        <p className={ 'text-strong ' + (food.price >= 10000 ? 'price-red' : 'price-blue') }>{food.price}</p>
+        <p className={ 'text-strong ' + priceTextClassName }>{food.price}</p>
+                
+
+        // 배열단위로 관리 join 함수 활용
+        ['text-strong', 'price-red'].join(" ") -> 'text-strong price-red'
+        ['text-strong', 'price-red'].join("/") -> 'text-strong/price-red'
+        <p className={ ['text-strong', (food.price >= 10000 ? 'price-red' : 'price-blue')].join(" ") }>{food.price}</p>
+
+        //백틱문자 활용 ``````
+        <p className={ `text-strong  ${priceTextClassName}` }>{food.price}</p>
+        <p className={ `text-strong ${(food.price >= 10000 ? 'price-red' : 'price-blue')}` }>{food.price}</p>
+
+        4) css class + useState + useEffect 조합 활용 -> 효과 발생
+
+        let [viewStatus, setViewStatus] = useState('');
+
+useEffect(() => {
+    // setViewStatus('end');
+    setTimeout(() => {
+        setViewStatus('end');
+    }, 500)
+
+}, [])
+
+        <Container className={"start " + viewStatus}>
+
+        5) js 객체로 내부에서 스타일 정의 후 사용
+
+    */
+
+    const styles = {
+
+        redStyle : {color : 'red' },        //styles.redStyle
+        blueStyle : {color : 'blue'},       //styles.redSrtle
+        fontBigBold : {                     //styles.dontBigBild
+            fontSize : '36px',
+            fontWeight : 'bold'
+        },
+
+        titleStyle : {
+            paddingTop :'30px',
+            fontSize : '40px',
+            fontWeight : 'bold'
+        }
+
+    }
+
+    const priceTextStyleFunc = (price) => {
+        if (price >= 10000) {
+            return { color: 'red' };
         } else {
-            gogiWanja = <Button variant="primary">주문하기</Button>
-        };
+            return { color: 'blue' };
+        }
+    }
+
+
+    const priceTextStyle = {
+        color: food.price >= 10000 ? 'red' : 'blue'
+    }
+
+    const priceTextClassName = (food.price >= 10000 ? 'price-red' : 'price-blue');
+
+    //------------------------------
 
     return (
 
@@ -153,9 +246,27 @@ function Detail({ foods }) {
                     <img src={import.meta.env.BASE_URL + food.imgPath} style={{ width: '100%' }} />
                 </Col>
                 <Col md={6}>
-                    <h4>{food.title}</h4>
-                    <p>{food.content}</p>
+                    <h4 style={{ paddingTop: '30px' }}>{food.title}</h4>
+                    <h4 style={styles.titleStyle}>{food.title}</h4>
+                    <p style={styles.fontBigBold}>{food.content}</p>
                     <p>{food.price}</p>
+                    <p style={priceTextStyle}>{food.price}</p>
+                    <p style={{ color: food.price >= 10000 ? 'red' : 'blue' }}>{food.price}</p>
+                    <p style={priceTextStyleFunc(food.price)}>{food.price}</p>
+
+                    <p className={food.price >= 10000 ? 'price-red' : 'price-blue'}>{food.price}</p>
+                    <p className={'text-strong ' + (food.price >= 10000 ? 'price-red' : 'price-blue')}>{food.price}</p>
+                    <p className={'text-strong ' + priceTextClassName}>{food.price}</p>
+                    <p className={['text-strong', (food.price >= 10000 ? 'price-red' : 'price-blue')].join(" ")}>{food.price}</p>
+                    <p className={`text-strong  ${priceTextClassName}`}>{food.price}</p>
+                    <p className={`text-strong ${(food.price >= 10000 ? 'price-red' : 'price-blue')}`}>{food.price}</p>
+
+
+
+
+
+
+
                     <p>수량은 {food.stockCount}개</p>
 
                     <p>
